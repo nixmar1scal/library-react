@@ -5,7 +5,24 @@ import Price from "./Price";
 import Rating from "./Rating";
 
 export default function Book({ book }) {
-  
+  // 2:28:46
+const [img, setImg] = useState();
+
+const mountedRef = useRef(true);
+
+useEffect(() => {
+  const image = new Image();
+  image.src = book.url;
+  image.onload = () => {
+    setTimeout(() => {
+      if (mountedRef.current) 
+        setImg(image);
+    }, 300);
+  };
+  return () => {
+    mountedRef.current = false;
+  };
+});
 
   return (
     <div className="book">
@@ -42,21 +59,3 @@ export default function Book({ book }) {
 
 
 
-// // 2:28:46
-// const [img, setImg] = useState();
-
-// const mountedRef = useRef(true);
-
-// useEffect(() => {
-//   const image = new Image();
-//   image.src = book.url;
-//   image.onload = () => {
-//     setTimeout(() => {
-//       if (mountedRef.current) 
-//         setImg(image);
-//     }, 300);
-//   };
-//   return () => {
-//     mountedRef.current = false;
-//   };
-// });
